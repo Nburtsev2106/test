@@ -1,1 +1,20 @@
-ssh root@10.16.30.90 'hostnamectl'
+#!groovy
+//Check node-1 properties
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent {
+        label 'master'
+        }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timestamps()
+    }
+    stages {
+        stage("First step") {
+            steps {
+                sh 'ssh root@node-1 \ 'hostnamectl\''
+            }
+        }
+   }
+}
